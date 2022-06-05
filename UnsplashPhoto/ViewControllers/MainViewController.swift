@@ -10,20 +10,29 @@ import UIKit
 class MainViewController: UIViewController {
     
     private var collectionView: UICollectionView?
-    
     private var results: [Result] = []
-
+    private let searchBar = UISearchBar()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Main"
-        view.backgroundColor = .white
-        getResults()
+        view.backgroundColor = .systemBackground
+        searchBar.delegate = self
+        view.addSubview(searchBar)
         setLayoutCollectionView()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        collectionView?.frame = view.bounds
+        searchBar.frame = CGRect(
+            x: 10,
+            y: view.safeAreaInsets.top,
+            width: view.frame.size.width - 20,
+            height: 50)
+        collectionView?.frame = CGRect(
+            x: 0,
+            y: view.safeAreaInsets.top + 55,
+            width: view.frame.size.width,
+            height: view.frame.size.height - 55)
     }
     
     private func setLayoutCollectionView() {
@@ -33,32 +42,47 @@ class MainViewController: UIViewController {
         layout.minimumInteritemSpacing = 0
         layout.itemSize = CGSize(
             width: view.frame.width / 2,
-            height: view.frame.height / 2)
+            height: view.frame.width / 2)
         let collectionView = UICollectionView(
             frame: .zero,
             collectionViewLayout: layout
         )
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+        collectionView.register(
+            ImageCollectionViewCell.self,
+            forCellWithReuseIdentifier: ImageCollectionViewCell.identifier
+        )
         collectionView.dataSource = self
         view.addSubview(collectionView)
         self.collectionView = collectionView
     }
-    
-    private func getResults() {
-        DatabaseServices.shared.searchPhotos { response in
-            self.results = response.results
-            self.collectionView?.reloadData()
-        }
-    }
 }
+
+// MARK: - UICollectionViewDataSource
 
 extension MainViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         results.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-        
+        let imageURL = results[indexPath.row].urls.regular
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.identifier, for: indexPath) as? ImageCollectionViewCell else {
+            return UICollectionViewCell()
+        }
+        cell.configure(with: imageURL)
         return cell
+    }
+}
+
+// MARK: - UISearchBarDelegate
+
+extension MainViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        if let text = searchBar.text {
+            NetworkManager.shared.searchPhotos(query: text) { response in
+                self.results = response.results
+                self.collectionView?.reloadData()
+            }
+        }
     }
 }
