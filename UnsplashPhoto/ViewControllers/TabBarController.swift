@@ -23,7 +23,7 @@ final class TabBarController: UITabBarController {
     
     private func setIconInTabBar() {
         guard let items = tabBar.items else { return }
-        let image = ["photo.on.rectangle", "heart"]
+        let image = ["photo.on.rectangle", "heart.fill"]
         for i in 0 ..< items.count {
             items[i].image = UIImage(systemName: image[i])
         }

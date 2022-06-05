@@ -9,6 +9,7 @@ import UIKit
 
 class MainViewController: UIViewController {
     
+    private let networkManager = NetworkManager.shared
     private var collectionView: UICollectionView?
     private var results: [Result] = []
     private let searchBar = UISearchBar()
@@ -88,7 +89,7 @@ extension MainViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
         if let text = searchBar.text {
-            NetworkManager.shared.searchPhotos(query: text) { response in
+            networkManager.searchPhotos(query: text) { response in
                 self.results = response.results
                 self.collectionView?.reloadData()
             }
