@@ -44,6 +44,12 @@ class DetailPhotoViewController: UIViewController {
         
     }
     
+    func addToFavorite(_ resultId: Result, completion: @escaping([Result]) -> Void) {
+        var resultsFavorite: [Result] = []
+        resultsFavorite.append(resultId)
+        completion(resultsFavorite)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
