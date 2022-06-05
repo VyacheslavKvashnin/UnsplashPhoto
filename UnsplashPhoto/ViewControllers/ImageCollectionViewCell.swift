@@ -17,6 +17,16 @@ class ImageCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
     
+    override var isSelected: Bool {
+        didSet {
+            setAlphaPhoto()
+        }
+    }
+    
+    private func setAlphaPhoto() {
+        imageView.alpha = isSelected ? 0.7 : 1
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.addSubview(imageView)

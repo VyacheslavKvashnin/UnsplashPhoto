@@ -52,6 +52,7 @@ class MainViewController: UIViewController {
             forCellWithReuseIdentifier: ImageCollectionViewCell.identifier
         )
         collectionView.dataSource = self
+        collectionView.delegate = self
         view.addSubview(collectionView)
         self.collectionView = collectionView
     }
@@ -59,7 +60,15 @@ class MainViewController: UIViewController {
 
 // MARK: - UICollectionViewDataSource
 
-extension MainViewController: UICollectionViewDataSource {
+extension MainViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let result = results[indexPath.item]
+        let detailVC = DetailPhotoViewController()
+        detailVC.results = result
+        navigationController?.pushViewController(detailVC, animated: true)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         results.count
     }

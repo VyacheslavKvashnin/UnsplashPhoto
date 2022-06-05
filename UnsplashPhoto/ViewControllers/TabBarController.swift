@@ -14,7 +14,7 @@ final class TabBarController: UITabBarController {
         
         let mainVC = UINavigationController(rootViewController: MainViewController())
         let favoriteVC = UINavigationController(rootViewController: FavoriteViewController())
-        mainVC.title = "Main"
+        mainVC.title = "Photos"
         favoriteVC.title = "Favorite"
         
         setViewControllers([mainVC, favoriteVC], animated: true)
@@ -23,7 +23,7 @@ final class TabBarController: UITabBarController {
     
     private func setIconInTabBar() {
         guard let items = tabBar.items else { return }
-        let image = ["menucard", "heart"]
+        let image = ["photo.on.rectangle", "heart"]
         for i in 0 ..< items.count {
             items[i].image = UIImage(systemName: image[i])
         }

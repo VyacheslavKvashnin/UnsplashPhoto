@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		BD1364FA284C611A00B90E4C /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1364F9284C611A00B90E4C /* ImageCollectionViewCell.swift */; };
+		BD1364FC284CB79600B90E4C /* DetailPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1364FB284CB79600B90E4C /* DetailPhotoViewController.swift */; };
 		BD17A6D8284BCB7200CDCD2B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD17A6D7284BCB7200CDCD2B /* AppDelegate.swift */; };
 		BD17A6DC284BCB7200CDCD2B /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD17A6DB284BCB7200CDCD2B /* TabBarController.swift */; };
 		BD17A6E1284BCB7400CDCD2B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BD17A6E0284BCB7400CDCD2B /* Assets.xcassets */; };
@@ -19,6 +20,7 @@
 
 /* Begin PBXFileReference section */
 		BD1364F9284C611A00B90E4C /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		BD1364FB284CB79600B90E4C /* DetailPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPhotoViewController.swift; sourceTree = "<group>"; };
 		BD17A6D4284BCB7200CDCD2B /* UnsplashPhoto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UnsplashPhoto.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD17A6D7284BCB7200CDCD2B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BD17A6DB284BCB7200CDCD2B /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
@@ -84,6 +86,7 @@
 				BD17A6F0284BCFAF00CDCD2B /* MainViewController.swift */,
 				BD17A6F2284BCFC300CDCD2B /* FavoriteViewController.swift */,
 				BD1364F9284C611A00B90E4C /* ImageCollectionViewCell.swift */,
+				BD1364FB284CB79600B90E4C /* DetailPhotoViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -188,6 +191,7 @@
 				BD1364FA284C611A00B90E4C /* ImageCollectionViewCell.swift in Sources */,
 				BD17A6F3284BCFC300CDCD2B /* FavoriteViewController.swift in Sources */,
 				BD17A6F7284BE21E00CDCD2B /* NetworkManager.swift in Sources */,
+				BD1364FC284CB79600B90E4C /* DetailPhotoViewController.swift in Sources */,
 				BD17A6F5284BE0E300CDCD2B /* DataResponse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
