@@ -13,6 +13,8 @@ final class DetailPhotoViewController: UIViewController {
     
     var result: Result!
     
+    var array = [1,2,3,4,5,6,7,8,9]
+    
     private let photoImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -58,22 +60,21 @@ final class DetailPhotoViewController: UIViewController {
         guard let controllers = tabBarController?.viewControllers else { return }
         for controller in controllers {
             let navigationVC = controller as? UINavigationController
-            let favoriteVC = navigationVC?.topViewController as? FavoriteViewController
-            
-            if favoriteVC?.results.first?.id != result.id {
-                addInFavoriteButton.setTitle("Remove from favorites", for: .normal)
-                favoriteVC?.results.append(result)
+            if let favoriteVC = navigationVC?.topViewController as? FavoriteViewController {
+                
+                if favoriteVC.results.first?.id != result.id {
+                    addInFavoriteButton.setTitle("Remove from favorites", for: .normal)
+                    favoriteVC.results.append(result)
+                } else {
+                    if let index = favoriteVC.results.firstIndex(where: { $0.id == result.id }) {
+                        favoriteVC.results.remove(at: index)
+                        addInFavoriteButton.setTitle("Add To Favorite", for: .normal)
+                    }
+                }
+                favoriteVC.tableView.reloadData()
             }
-            
-            favoriteVC?.tableView.reloadData()
         }
     }
-    
-    func prinTr() {
-        let vc = FavoriteViewController()
-        print(vc.results)
-    }
-    
     
     private func configureStackView() {
         view.addSubview(stackView)

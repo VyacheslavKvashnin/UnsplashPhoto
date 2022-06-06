@@ -16,13 +16,14 @@ final class FavoriteViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Favorite"
-        view.backgroundColor = .white
-        
+        view.backgroundColor = .systemBackground
         view.addSubview(tableView)
-        tableView.register(CustomTableViewCell.self, forCellReuseIdentifier: CustomTableViewCell.identifier)
+        tableView.register(
+            CustomTableViewCell.self,
+            forCellReuseIdentifier: CustomTableViewCell.identifier
+        )
         tableView.dataSource = self
         tableView.delegate = self
-      
     }
     
     override func viewDidLayoutSubviews() {
@@ -40,11 +41,9 @@ extension FavoriteViewController: UITableViewDataSource, UITableViewDelegate {
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: CustomTableViewCell.identifier,
             for: indexPath) as? CustomTableViewCell else { return UITableViewCell() }
-        let imageURL = results[indexPath.row].urls.small
-        cell.configure(
-            urlString: imageURL,
-            text: results[indexPath.row].user.name)
         
+        let imageURL = results[indexPath.row].urls.regular
+        cell.configure(urlString: imageURL, text: results[indexPath.row].user.name)
         return cell
     }
     
@@ -58,5 +57,15 @@ extension FavoriteViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         100
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let deleteAction = UIContextualAction(style: .destructive, title: "Удалить") {  (contextualAction, view, boolValue) in
+            self.results.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            tableView.reloadData()
+        }
+        let swipeActions = UISwipeActionsConfiguration(actions: [deleteAction])
+        return swipeActions
     }
 }
