@@ -18,7 +18,10 @@ final class MainViewController: UIViewController {
         super.viewDidLoad()
         title = "Photos"
         view.backgroundColor = .systemBackground
+        
+        searchBar.placeholder = "Search photo"
         searchBar.delegate = self
+        
         view.addSubview(searchBar)
         setLayoutCollectionView()
     }
