@@ -40,10 +40,9 @@ extension FavoriteViewController: UITableViewDataSource, UITableViewDelegate {
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: CustomTableViewCell.identifier,
             for: indexPath) as? CustomTableViewCell else { return UITableViewCell() }
-        guard let urlString = URL(string: results[indexPath.row].urls.small) else { return UITableViewCell() }
-        guard let dataImage = try? Data(contentsOf: urlString) else { return UITableViewCell() }
+        let imageURL = results[indexPath.row].urls.small
         cell.configure(
-            imageView: dataImage,
+            urlString: imageURL,
             text: results[indexPath.row].user.name)
         
         return cell

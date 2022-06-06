@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 final class CustomTableViewCell: UITableViewCell {
     
@@ -35,9 +36,10 @@ final class CustomTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(imageView: Data, text: String) {
+    func configure(urlString: String, text: String) {
+        guard let url = URL(string: urlString) else { return }
         labelCell.text = text
-        imageViewCell.image = UIImage(data: imageView)
+        imageViewCell.sd_setImage(with: url)
     }
     
     override func prepareForReuse() {
