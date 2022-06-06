@@ -11,7 +11,7 @@ class DetailPhotoViewController: UIViewController {
     
     private let stackView = UIStackView()
     
-    var results: Result!
+    var result: Result!
     
     private let photoImageView: UIImageView = {
         let imageView = UIImageView()
@@ -40,14 +40,14 @@ class DetailPhotoViewController: UIViewController {
     }()
     
     @objc func saveInFavorite() {
-        print(results.id)
+        addToFavorite()
         
     }
     
-    func addToFavorite(_ resultId: Result, completion: @escaping([Result]) -> Void) {
-        var resultsFavorite: [Result] = []
-        resultsFavorite.append(resultId)
-        completion(resultsFavorite)
+    func addToFavorite() {
+        let favoriteVC = FavoriteViewController()
+        favoriteVC.results.append(result)
+        print("Adding: ", favoriteVC.results)
     }
     
     override func viewDidLoad() {
@@ -55,8 +55,8 @@ class DetailPhotoViewController: UIViewController {
         view.backgroundColor = .systemBackground
     
         setImage()
-        userName.text = results.user.name
-        dataCreate.text = results.created_at
+        userName.text = result.user.name
+        dataCreate.text = result.created_at
         
         configureStackView()
     }
@@ -85,7 +85,7 @@ class DetailPhotoViewController: UIViewController {
     
     private func setImage() {
         view.addSubview(photoImageView)
-        guard let url = URL(string: results.urls.regular) else { return }
+        guard let url = URL(string: result.urls.regular) else { return }
         do {
             let dataImage = try Data(contentsOf: url)
             photoImageView.image = UIImage(data: dataImage)

@@ -66,7 +66,7 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let result = results[indexPath.item]
         let detailVC = DetailPhotoViewController()
-        detailVC.results = result
+        detailVC.result = result
         navigationController?.pushViewController(detailVC, animated: true)
     }
     

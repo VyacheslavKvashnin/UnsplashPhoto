@@ -32,12 +32,12 @@ class FavoriteViewController: UIViewController {
 
 extension FavoriteViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        10
+        results.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = "myArray[indexPath.row]"
+        cell.textLabel?.text = results[indexPath.row].id
         return cell
     }
 }
