@@ -41,13 +41,18 @@ class DetailPhotoViewController: UIViewController {
     
     @objc func saveInFavorite() {
         addToFavorite()
-        
     }
     
     func addToFavorite() {
-        let favoriteVC = FavoriteViewController()
-        favoriteVC.results.append(result)
-        print("Adding: ", favoriteVC.results)
+        
+        guard let controllers = tabBarController?.viewControllers else { return }
+        
+        for controller in controllers {
+            let navigationVC = controller as? UINavigationController
+            let favoriteVC = navigationVC?.topViewController as? FavoriteViewController
+            favoriteVC?.results.append(result)
+            favoriteVC?.tableView.reloadData()
+        }
     }
     
     override func viewDidLoad() {
@@ -59,6 +64,7 @@ class DetailPhotoViewController: UIViewController {
         dataCreate.text = result.created_at
         
         configureStackView()
+
     }
     
     private func configureStackView() {

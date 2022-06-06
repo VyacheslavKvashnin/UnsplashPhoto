@@ -12,7 +12,7 @@ class FavoriteViewController: UIViewController {
     var results: [Result] = []
     
     let tableView = UITableView()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Favorite"
@@ -22,6 +22,7 @@ class FavoriteViewController: UIViewController {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.dataSource = self
         tableView.delegate = self
+      
     }
     
     override func viewDidLayoutSubviews() {
