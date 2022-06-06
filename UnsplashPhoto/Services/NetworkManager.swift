@@ -12,15 +12,17 @@ class NetworkManager {
     
     private init() {}
     
+    let token = "EeIzrN0doNb4XPlVf2cb7-ObHtvadTYOXRVEXetBUgw"
+    
     func searchPhotos(query: String, completion: @escaping(DataResponse) -> Void) {
-        let urlString = "https://api.unsplash.com/search/photos?per_page=50&page=1&query=\(query)&client_id=EeIzrN0doNb4XPlVf2cb7-ObHtvadTYOXRVEXetBUgw"
         
-        guard let url = URL(string: urlString) else { return }
+        guard let url = URL(string: "https://api.unsplash.com/search/photos?per_page=50&page=1&query=\(query)") else { return }
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue("Client-ID \(token)", forHTTPHeaderField: "Authorization")
         
-        let task = URLSession.shared.dataTask(with: url) { data, _, error in
-            guard let data = data, error == nil else {
-                return
-            }
+        let task = URLSession.shared.dataTask(with: request) { data, _, error in
+            guard let data = data, error == nil else { return }
             do {
                 let result = try JSONDecoder().decode(DataResponse.self, from: data)
                 DispatchQueue.main.async {

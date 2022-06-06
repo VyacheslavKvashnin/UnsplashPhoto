@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MainViewController: UIViewController {
+final class MainViewController: UIViewController {
     
     private let networkManager = NetworkManager.shared
     private var collectionView: UICollectionView?
@@ -16,6 +16,7 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Photos"
         view.backgroundColor = .systemBackground
         searchBar.delegate = self
         view.addSubview(searchBar)

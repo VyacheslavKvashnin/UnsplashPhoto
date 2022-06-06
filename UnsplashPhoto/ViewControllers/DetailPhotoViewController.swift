@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DetailPhotoViewController: UIViewController {
+final class DetailPhotoViewController: UIViewController {
     
     private let stackView = UIStackView()
     
@@ -43,10 +43,19 @@ class DetailPhotoViewController: UIViewController {
         addToFavorite()
     }
     
-    func addToFavorite() {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .systemBackground
         
+        userName.text = result.user.name
+        dataCreate.text = result.created_at
+        view.addSubview(photoImageView)
+        configureStackView()
+        setImage(urlString: result.urls.regular)
+    }
+    
+    private func addToFavorite() {
         guard let controllers = tabBarController?.viewControllers else { return }
-        
         for controller in controllers {
             let navigationVC = controller as? UINavigationController
             let favoriteVC = navigationVC?.topViewController as? FavoriteViewController
@@ -55,16 +64,6 @@ class DetailPhotoViewController: UIViewController {
         }
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .systemBackground
-
-        userName.text = result.user.name
-        dataCreate.text = result.created_at
-        view.addSubview(photoImageView)
-        configureStackView()
-        setImage(urlString: result.urls.regular)
-    }
     
     private func configureStackView() {
         view.addSubview(stackView)
