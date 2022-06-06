@@ -58,13 +58,12 @@ class DetailPhotoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-    
-        setImage()
+
         userName.text = result.user.name
         dataCreate.text = result.created_at
-        
+        view.addSubview(photoImageView)
         configureStackView()
-
+        setImage(urlString: result.urls.regular)
     }
     
     private func configureStackView() {
@@ -89,9 +88,8 @@ class DetailPhotoViewController: UIViewController {
         stackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -50).isActive = true
     }
     
-    private func setImage() {
-        view.addSubview(photoImageView)
-        guard let url = URL(string: result.urls.regular) else { return }
+    private func setImage(urlString: String) {
+        guard let url = URL(string: urlString) else { return }
         do {
             let dataImage = try Data(contentsOf: url)
             photoImageView.image = UIImage(data: dataImage)

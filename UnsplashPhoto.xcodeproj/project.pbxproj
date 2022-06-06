@@ -16,6 +16,7 @@
 		BD17A6F3284BCFC300CDCD2B /* FavoriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD17A6F2284BCFC300CDCD2B /* FavoriteViewController.swift */; };
 		BD17A6F5284BE0E300CDCD2B /* DataResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD17A6F4284BE0E300CDCD2B /* DataResponse.swift */; };
 		BD17A6F7284BE21E00CDCD2B /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD17A6F6284BE21E00CDCD2B /* NetworkManager.swift */; };
+		BD879AAC284E1E5B00EEC165 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD879AAB284E1E5B00EEC165 /* CustomTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		BD17A6F2284BCFC300CDCD2B /* FavoriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewController.swift; sourceTree = "<group>"; };
 		BD17A6F4284BE0E300CDCD2B /* DataResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataResponse.swift; sourceTree = "<group>"; };
 		BD17A6F6284BE21E00CDCD2B /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		BD879AAB284E1E5B00EEC165 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +87,7 @@
 				BD17A6DB284BCB7200CDCD2B /* TabBarController.swift */,
 				BD17A6F0284BCFAF00CDCD2B /* MainViewController.swift */,
 				BD17A6F2284BCFC300CDCD2B /* FavoriteViewController.swift */,
+				BD879AAB284E1E5B00EEC165 /* CustomTableViewCell.swift */,
 				BD1364F9284C611A00B90E4C /* ImageCollectionViewCell.swift */,
 				BD1364FB284CB79600B90E4C /* DetailPhotoViewController.swift */,
 			);
@@ -185,6 +188,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BD879AAC284E1E5B00EEC165 /* CustomTableViewCell.swift in Sources */,
 				BD17A6F1284BCFAF00CDCD2B /* MainViewController.swift in Sources */,
 				BD17A6DC284BCB7200CDCD2B /* TabBarController.swift in Sources */,
 				BD17A6D8284BCB7200CDCD2B /* AppDelegate.swift in Sources */,

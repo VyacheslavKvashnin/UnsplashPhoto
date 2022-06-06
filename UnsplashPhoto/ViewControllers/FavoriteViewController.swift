@@ -19,7 +19,7 @@ class FavoriteViewController: UIViewController {
         view.backgroundColor = .white
         
         view.addSubview(tableView)
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.register(CustomTableViewCell.self, forCellReuseIdentifier: CustomTableViewCell.identifier)
         tableView.dataSource = self
         tableView.delegate = self
       
@@ -37,8 +37,26 @@ extension FavoriteViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = results[indexPath.row].id
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: CustomTableViewCell.identifier,
+            for: indexPath) as? CustomTableViewCell else { return UITableViewCell() }
+        guard let urlString = URL(string: results[indexPath.row].urls.small) else { return UITableViewCell() }
+        guard let dataImage = try? Data(contentsOf: urlString) else { return UITableViewCell() }
+        cell.configure(
+            imageView: dataImage,
+            text: results[indexPath.row].user.name)
+        
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let result = results[indexPath.row]
+        let detailVC = DetailPhotoViewController()
+        detailVC.result = result
+        navigationController?.pushViewController(detailVC, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        100
     }
 }
