@@ -31,7 +31,7 @@ final class DetailPhotoViewController: UIViewController {
     
     private let addInFavoriteButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Add Favorite", for: .normal)
+        button.setTitle("Add To Favorite", for: .normal)
         button.setTitleColor(UIColor.white, for: .normal)
         button.backgroundColor = .systemCyan
         button.layer.cornerRadius = 10
@@ -59,9 +59,19 @@ final class DetailPhotoViewController: UIViewController {
         for controller in controllers {
             let navigationVC = controller as? UINavigationController
             let favoriteVC = navigationVC?.topViewController as? FavoriteViewController
-            favoriteVC?.results.append(result)
+            
+            if favoriteVC?.results.first?.id != result.id {
+                addInFavoriteButton.setTitle("Remove from favorites", for: .normal)
+                favoriteVC?.results.append(result)
+            }
+            
             favoriteVC?.tableView.reloadData()
         }
+    }
+    
+    func prinTr() {
+        let vc = FavoriteViewController()
+        print(vc.results)
     }
     
     
