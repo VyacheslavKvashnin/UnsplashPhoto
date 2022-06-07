@@ -16,6 +16,8 @@ enum NetworkError: String, Error {
 class NetworkManager {
     static let shared = NetworkManager()
     
+    private init() {}
+    
     let token = "EeIzrN0doNb4XPlVf2cb7-ObHtvadTYOXRVEXetBUgw"
     
     func fetchPhotos(query: String, completion: @escaping(Result<[Results], NetworkError>) -> Void) {
@@ -30,17 +32,14 @@ class NetworkManager {
         request.setValue("Client-ID \(token)", forHTTPHeaderField: "Authorization")
         
         URLSession.shared.dataTask(with: request) { data, response, error in
-            
             if error != nil {
                 completion(.failure(.invalidData))
                 return
             }
-            
             guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
                 completion(.failure(.invalidData))
                 return
             }
-            
             guard let data = data else {
                 completion(.failure(.invalidData))
                 return }
