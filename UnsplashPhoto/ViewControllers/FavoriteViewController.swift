@@ -9,7 +9,7 @@ import UIKit
 
 final class FavoriteViewController: UIViewController {
     
-    var results: [Result] = []
+    var results: [Results] = []
     
     let tableView = UITableView()
     

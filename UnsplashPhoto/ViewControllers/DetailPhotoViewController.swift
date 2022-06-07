@@ -11,7 +11,7 @@ final class DetailPhotoViewController: UIViewController {
     
     private let stackView = UIStackView()
     
-    var result: Result!
+    var result: Results!
     
     private let photoImageView: UIImageView = {
         let imageView = UIImageView()
@@ -77,7 +77,6 @@ final class DetailPhotoViewController: UIViewController {
                     favoriteVC.results.append(result)
                 } else {
                     if let index = favoriteVC.results.firstIndex(where: { $0.id == result.id }) {
-//                        showAlert(title: "", message: "Delete photo from favorite?")
                         favoriteVC.results.remove(at: index)
                         addInFavoriteButton.setTitle("Add To Favorite", for: .normal)
                     }

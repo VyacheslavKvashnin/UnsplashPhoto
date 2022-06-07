@@ -11,7 +11,7 @@ final class MainViewController: UIViewController {
     
     private let networkManager = NetworkManager.shared
     private var collectionView: UICollectionView?
-    private var results: [Result] = []
+    private var results: [Results] = []
     private let searchBar = UISearchBar()
     
     override func viewDidLoad() {
@@ -21,6 +21,17 @@ final class MainViewController: UIViewController {
         
         searchBar.placeholder = "Search photo"
         searchBar.delegate = self
+        
+        networkManager.fetchPhotos(query: "") { [weak self] results in
+            switch results {
+            case .success(let results):
+                self?.results = results
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+            
+            self?.collectionView?.reloadData()
+        }
         
         view.addSubview(searchBar)
         setLayoutCollectionView()
@@ -93,9 +104,14 @@ extension MainViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
         if let text = searchBar.text {
-            networkManager.searchPhotos(query: text) { [unowned self] response in
-                self.results = response
-                self.collectionView?.reloadData()
+            networkManager.fetchPhotos(query: text) { [weak self] results in
+                switch results {
+                case .success(let results):
+                    self?.results = results
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+                self?.collectionView?.reloadData()
             }
         }
     }

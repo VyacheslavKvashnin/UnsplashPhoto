@@ -7,9 +7,10 @@
 
 import Foundation
 
-enum NetworkError: Error {
-    case badResponse(URLResponse)
-    case badData
+enum NetworkError: String, Error {
+    case badURL = "No connection to url address."
+    case unableToComplete = "Unable to complete your request. Please check your internet connection"
+    case invalidData = "The data received from the server was invalid. Please try again."
 }
 
 class NetworkManager {
@@ -17,83 +18,40 @@ class NetworkManager {
     
     let token = "EeIzrN0doNb4XPlVf2cb7-ObHtvadTYOXRVEXetBUgw"
     
-    let session: URLSession
+    func fetchPhotos(query: String, completion: @escaping(Result<[Results], NetworkError>) -> Void) {
     
-    init() {
-        let config = URLSessionConfiguration.default
-        session = URLSession(configuration: config)
-    }
-    
-    private func components() -> URLComponents {
-        var component = URLComponents()
-        component.scheme = "https"
-        component.host = "api.unsplash.com"
-        return component
-    }
-    
-    private func request(url: URL) -> URLRequest {
-        var request = URLRequest(url: url)
-        request.addValue("Client-ID \(token)", forHTTPHeaderField: "Authorization")
-        return request
-    }
-    
-    func fetchPhotos(query: String, completion: @escaping([Result]?, Error?) -> Void) {
-        var component = components()
-        component.path = "/search/photos"
-        component.queryItems = [
-            URLQueryItem(name: "query", value: query)
-        ]
-        let reg = request(url: component.url!)
-        
-        let task = session.dataTask(with: reg) { data, response, error in
-            if let error = error {
-                completion(nil, error)
-                return
-            }
-            
-            guard let httpResponse = response as? HTTPURLResponse,
-                  (200...299).contains(httpResponse.statusCode) else {
-                      completion(nil, NetworkError.badResponse(response!))
-                      return
-                  }
-            
-            guard let data = data else {
-                completion(nil, NetworkError.badData)
-                return
-            }
-            
-            do {
-                let result = try JSONDecoder().decode(ApiResponse.self, from: data)
-                DispatchQueue.main.async {
-                    completion(result.results, nil)
-                }
-            } catch let error {
-                completion(nil, error)
-            }
+        guard let urlRandom = URL(string: "https://api.unsplash.com/photos/random/?count=30&query=\(query)") else {
+            completion(.failure(.badURL))
+            return
         }
-        task.resume()
-    }
-    
-    
-    func searchPhotos(query: String, completion: @escaping([Result]) -> Void) {
-        
-        guard let urlRandom = URL(string: "https://api.unsplash.com/photos/random/?count=30&query=\(query)") else { return }
         
         var request = URLRequest(url: urlRandom)
         request.httpMethod = "GET"
         request.setValue("Client-ID \(token)", forHTTPHeaderField: "Authorization")
         
-        let task = URLSession.shared.dataTask(with: request) { data, _, error in
-            guard let data = data, error == nil else { return }
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            
+            if error != nil {
+                completion(.failure(.invalidData))
+                return
+            }
+            
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                completion(.failure(.invalidData))
+                return
+            }
+            
+            guard let data = data else {
+                completion(.failure(.invalidData))
+                return }
             do {
-                let result = try JSONDecoder().decode([Result].self, from: data)
+                let result = try JSONDecoder().decode([Results].self, from: data)
                 DispatchQueue.main.async {
-                    completion(result)
+                    completion(.success(result))
                 }
             } catch {
-                print(error)
+                completion(.failure(.invalidData))
             }
-        }
-        task.resume()
+        }.resume()
     }
 }
