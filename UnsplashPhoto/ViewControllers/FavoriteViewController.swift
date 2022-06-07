@@ -9,13 +9,17 @@ import UIKit
 
 final class FavoriteViewController: UIViewController {
     
-    var results: [Results] = []
+    var results: [DataPhoto] = []
     let tableView = UITableView()
+    
+    var dataManager = DatabaseManager.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Favorite"
         view.backgroundColor = .systemBackground
+        
+        fetchData()
         
         tableView.dataSource = self
         tableView.delegate = self
@@ -26,9 +30,21 @@ final class FavoriteViewController: UIViewController {
         view.addSubview(tableView)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         tableView.frame = view.bounds
+    }
+    
+    func fetchData() {
+        dataManager.fetchDataPhoto { [weak self] dataPhoto in
+            self?.results = dataPhoto
+            self?.tableView.reloadData()
+        }
     }
 }
 
@@ -44,8 +60,8 @@ extension FavoriteViewController: UITableViewDataSource, UITableViewDelegate {
             withIdentifier: CustomTableViewCell.identifier,
             for: indexPath) as? CustomTableViewCell else { return UITableViewCell() }
         
-        let imageURL = results[indexPath.row].urls.regular
-        guard let userName = results[indexPath.row].user?.name else { return UITableViewCell() }
+        guard let imageURL = results[indexPath.row].photo else { return UITableViewCell() }
+        guard let userName = results[indexPath.row].userName else { return UITableViewCell() }
         
         cell.configure(urlString: imageURL, text: userName)
         return cell
@@ -55,7 +71,7 @@ extension FavoriteViewController: UITableViewDataSource, UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         let result = results[indexPath.row]
         let detailVC = DetailPhotoViewController()
-        detailVC.result = result
+//        detailVC.result = result
         navigationController?.pushViewController(detailVC, animated: true)
     }
     

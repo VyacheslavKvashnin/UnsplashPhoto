@@ -14,6 +14,8 @@ final class DetailPhotoViewController: UIViewController {
     
     var result: Results!
     
+    var dataManager = DatabaseManager.shared
+    
     private let photoImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -64,11 +66,6 @@ final class DetailPhotoViewController: UIViewController {
         setImage(urlString: result.urls.regular)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-    }
-    
     private func setup() {
         userName.text = result.user?.name
         dataCreate.text = result.created_at
@@ -77,23 +74,12 @@ final class DetailPhotoViewController: UIViewController {
     }
     
     private func addToFavorite() {
-        guard let controllers = tabBarController?.viewControllers else { return }
-        for controller in controllers {
-            let navigationVC = controller as? UINavigationController
-            if let favoriteVC = navigationVC?.topViewController as? FavoriteViewController {
-                
-                if favoriteVC.results.first?.id != result.id {
-                    favoriteVC.results.append(result)
-                    addInFavoriteButton.setTitle("Remove From Favorite", for: .normal)
-                } else {
-                    if let index = favoriteVC.results.firstIndex(where: { $0.id == result.id }) {
-                        favoriteVC.results.remove(at: index)
-                        addInFavoriteButton.setTitle("Add To Favorite", for: .normal)
-                    }
-                }
-                favoriteVC.tableView.reloadData()
-            }
-        }
+        dataManager.saveData(
+            photo: result.urls.regular,
+            userName: result.user?.name ?? "",
+            location: result.user?.location ?? "",
+            date: result.created_at,
+            downloads: Int(result.downloads))
     }
     
     private func configureStackView() {

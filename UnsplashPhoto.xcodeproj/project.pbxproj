@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		07EDEB4FD562954B0FCD2F7E /* Pods_UnsplashPhoto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F50CBA7D477D61B442001F39 /* Pods_UnsplashPhoto.framework */; };
+		BD040002284FC3F800E9B0B7 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD040001284FC3F800E9B0B7 /* DatabaseManager.swift */; };
+		BD04FFDD284FBD2900E9B0B7 /* PhotoDatabase.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BD04FFDB284FBD2800E9B0B7 /* PhotoDatabase.xcdatamodeld */; };
 		BD1364FA284C611A00B90E4C /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1364F9284C611A00B90E4C /* ImageCollectionViewCell.swift */; };
 		BD1364FC284CB79600B90E4C /* DetailPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1364FB284CB79600B90E4C /* DetailPhotoViewController.swift */; };
 		BD17A6D8284BCB7200CDCD2B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD17A6D7284BCB7200CDCD2B /* AppDelegate.swift */; };
@@ -21,6 +23,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BD040001284FC3F800E9B0B7 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
+		BD04FFDC284FBD2900E9B0B7 /* PhotoDatabase.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PhotoDatabase.xcdatamodel; sourceTree = "<group>"; };
 		BD1364F9284C611A00B90E4C /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		BD1364FB284CB79600B90E4C /* DetailPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPhotoViewController.swift; sourceTree = "<group>"; };
 		BD17A6D4284BCB7200CDCD2B /* UnsplashPhoto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UnsplashPhoto.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -114,6 +118,7 @@
 				BD879AAB284E1E5B00EEC165 /* CustomTableViewCell.swift */,
 				BD1364F9284C611A00B90E4C /* ImageCollectionViewCell.swift */,
 				BD1364FB284CB79600B90E4C /* DetailPhotoViewController.swift */,
+				BD04FFDB284FBD2800E9B0B7 /* PhotoDatabase.xcdatamodeld */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -131,6 +136,7 @@
 			isa = PBXGroup;
 			children = (
 				BD17A6F6284BE21E00CDCD2B /* NetworkManager.swift */,
+				BD040001284FC3F800E9B0B7 /* DatabaseManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -257,6 +263,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				BD879AAC284E1E5B00EEC165 /* CustomTableViewCell.swift in Sources */,
+				BD040002284FC3F800E9B0B7 /* DatabaseManager.swift in Sources */,
+				BD04FFDD284FBD2900E9B0B7 /* PhotoDatabase.xcdatamodeld in Sources */,
 				BD17A6F1284BCFAF00CDCD2B /* MainViewController.swift in Sources */,
 				BD17A6DC284BCB7200CDCD2B /* TabBarController.swift in Sources */,
 				BD17A6D8284BCB7200CDCD2B /* AppDelegate.swift in Sources */,
@@ -465,6 +473,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		BD04FFDB284FBD2800E9B0B7 /* PhotoDatabase.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				BD04FFDC284FBD2900E9B0B7 /* PhotoDatabase.xcdatamodel */,
+			);
+			currentVersion = BD04FFDC284FBD2900E9B0B7 /* PhotoDatabase.xcdatamodel */;
+			path = PhotoDatabase.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = BD17A6CC284BCB7200CDCD2B /* Project object */;
 }
