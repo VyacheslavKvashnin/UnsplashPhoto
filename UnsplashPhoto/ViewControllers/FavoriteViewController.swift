@@ -83,6 +83,12 @@ extension FavoriteViewController: UITableViewDataSource, UITableViewDelegate {
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") {  (contextualAction, view, boolValue) in
             self.results.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
+            let item = self.results[indexPath.row]
+            self.showAlert(
+                title: "Are you sure you want to delete the picture?",
+                message: "",
+                item: item)
+            tableView.reloadData()
         }
         let swipeActions = UISwipeActionsConfiguration(actions: [deleteAction])
         return swipeActions
@@ -92,11 +98,11 @@ extension FavoriteViewController: UITableViewDataSource, UITableViewDelegate {
  // MARK: - Alert
 
 extension FavoriteViewController {
-    func showAlert(title: String, message: String) {
+    func showAlert(title: String, message: String, item: DataPhoto) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "Delete", style: .default, handler: { _ in
-            print("ok")
+            self.dataManager.deleteData(item: item)
         }))
         present(alert, animated: true, completion: nil)
     }

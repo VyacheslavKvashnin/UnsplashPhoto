@@ -34,13 +34,22 @@ class DatabaseManager {
         dataPhoto.location = location
         dataPhoto.downloads = Int16(downloads)
         dataPhoto.date = date
-        
+
         do {
             try context.save()
         } catch {
             
         }
         print(dataPhoto)
+    }
+    
+    func deleteData(item: DataPhoto) {
+        context.delete(item)
+        do {
+            try context.save()
+        } catch {
+            
+        }
     }
     
 }
