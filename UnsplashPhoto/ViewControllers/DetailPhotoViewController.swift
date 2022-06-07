@@ -13,8 +13,6 @@ final class DetailPhotoViewController: UIViewController {
     
     var result: Result!
     
-    var array = [1,2,3,4,5,6,7,8,9]
-    
     private let photoImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -79,6 +77,7 @@ final class DetailPhotoViewController: UIViewController {
                     favoriteVC.results.append(result)
                 } else {
                     if let index = favoriteVC.results.firstIndex(where: { $0.id == result.id }) {
+//                        showAlert(title: "", message: "Delete photo from favorite?")
                         favoriteVC.results.remove(at: index)
                         addInFavoriteButton.setTitle("Add To Favorite", for: .normal)
                     }
@@ -120,5 +119,14 @@ final class DetailPhotoViewController: UIViewController {
         } catch {
             print("error")
         }
+    }
+    
+    private func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Delete", style: .default, handler: { _ in
+            print("ok")
+        }))
+        present(alert, animated: true, completion: nil)
     }
 }

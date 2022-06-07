@@ -50,3 +50,4 @@ final class CustomTableViewCell: UITableViewCell {
         labelCell.frame = CGRect(x: 130, y: 0, width: 200, height: 100)
     }
 }
+
