@@ -10,20 +10,20 @@ import UIKit
 final class FavoriteViewController: UIViewController {
     
     var results: [Results] = []
-    
     let tableView = UITableView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Favorite"
         view.backgroundColor = .systemBackground
-        view.addSubview(tableView)
+        
+        tableView.dataSource = self
+        tableView.delegate = self
         tableView.register(
             CustomTableViewCell.self,
             forCellReuseIdentifier: CustomTableViewCell.identifier
         )
-        tableView.dataSource = self
-        tableView.delegate = self
+        view.addSubview(tableView)
     }
     
     override func viewDidLayoutSubviews() {
@@ -31,6 +31,8 @@ final class FavoriteViewController: UIViewController {
         tableView.frame = view.bounds
     }
 }
+
+ // MARK: - UITableViewDataSource, UITableViewDelegate 
 
 extension FavoriteViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -62,12 +64,24 @@ extension FavoriteViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let deleteAction = UIContextualAction(style: .destructive, title: "Удалить") {  (contextualAction, view, boolValue) in
+        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") {  (contextualAction, view, boolValue) in
             self.results.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
-            tableView.reloadData()
         }
         let swipeActions = UISwipeActionsConfiguration(actions: [deleteAction])
         return swipeActions
+    }
+}
+
+ // MARK: - Alert
+
+extension FavoriteViewController {
+    func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Delete", style: .default, handler: { _ in
+            print("ok")
+        }))
+        present(alert, animated: true, completion: nil)
     }
 }

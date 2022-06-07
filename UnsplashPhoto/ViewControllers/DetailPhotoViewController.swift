@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 final class DetailPhotoViewController: UIViewController {
     
@@ -57,13 +58,22 @@ final class DetailPhotoViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         
+        setup()
+        view.addSubview(photoImageView)
+        configureStackView()
+        setImage(urlString: result.urls.regular)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+    }
+    
+    private func setup() {
         userName.text = result.user?.name
         dataCreate.text = result.created_at
         locationUser.text = result.user?.location
         numberDownloads.text = String(result.downloads)
-        view.addSubview(photoImageView)
-        configureStackView()
-        setImage(urlString: result.urls.regular)
     }
     
     private func addToFavorite() {
@@ -73,8 +83,8 @@ final class DetailPhotoViewController: UIViewController {
             if let favoriteVC = navigationVC?.topViewController as? FavoriteViewController {
                 
                 if favoriteVC.results.first?.id != result.id {
-                    addInFavoriteButton.setTitle("Remove from favorites", for: .normal)
                     favoriteVC.results.append(result)
+                    addInFavoriteButton.setTitle("Remove From Favorite", for: .normal)
                 } else {
                     if let index = favoriteVC.results.firstIndex(where: { $0.id == result.id }) {
                         favoriteVC.results.remove(at: index)
@@ -112,20 +122,6 @@ final class DetailPhotoViewController: UIViewController {
     
     private func setImage(urlString: String) {
         guard let url = URL(string: urlString) else { return }
-        do {
-            let dataImage = try Data(contentsOf: url)
-            photoImageView.image = UIImage(data: dataImage)
-        } catch {
-            print("error")
-        }
-    }
-    
-    private func showAlert(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: "Delete", style: .default, handler: { _ in
-            print("ok")
-        }))
-        present(alert, animated: true, completion: nil)
+            photoImageView.sd_setImage(with: url)
     }
 }

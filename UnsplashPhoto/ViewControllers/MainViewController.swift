@@ -18,22 +18,12 @@ final class MainViewController: UIViewController {
         super.viewDidLoad()
         title = "Photos"
         view.backgroundColor = .systemBackground
-        
+                
         searchBar.placeholder = "Search photo"
         searchBar.delegate = self
-        
-        networkManager.fetchPhotos(query: "") { [weak self] results in
-            switch results {
-            case .success(let results):
-                self?.results = results
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-            
-            self?.collectionView?.reloadData()
-        }
-        
         view.addSubview(searchBar)
+        
+        fetchRandomPhoto()
         setLayoutCollectionView()
     }
     
@@ -49,6 +39,18 @@ final class MainViewController: UIViewController {
             y: view.safeAreaInsets.top + 55,
             width: view.frame.size.width,
             height: view.frame.size.height - 55)
+    }
+    
+    private func fetchRandomPhoto() {
+        networkManager.fetchPhotos(query: "") { [weak self] results in
+            switch results {
+            case .success(let results):
+                self?.results = results
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+            self?.collectionView?.reloadData()
+        }
     }
     
     private func setLayoutCollectionView() {
