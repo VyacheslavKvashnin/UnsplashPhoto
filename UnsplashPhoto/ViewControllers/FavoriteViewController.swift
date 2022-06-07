@@ -43,7 +43,9 @@ extension FavoriteViewController: UITableViewDataSource, UITableViewDelegate {
             for: indexPath) as? CustomTableViewCell else { return UITableViewCell() }
         
         let imageURL = results[indexPath.row].urls.regular
-        cell.configure(urlString: imageURL, text: (results[indexPath.row].user?.name)!)
+        guard let userName = results[indexPath.row].user?.name else { return UITableViewCell() }
+        
+        cell.configure(urlString: imageURL, text: userName)
         return cell
     }
     

@@ -10,13 +10,10 @@ import SDWebImage
 
 final class CustomTableViewCell: UITableViewCell {
     
-    var result: Result!
-    
     static let identifier = "CustomTableViewCell"
     
     private let imageViewCell: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "person")
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
@@ -49,7 +46,7 @@ final class CustomTableViewCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        imageViewCell.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+        imageViewCell.frame = CGRect(x: 16, y: 0, width: 100, height: 100)
         labelCell.frame = CGRect(x: 130, y: 0, width: 200, height: 100)
     }
 }
