@@ -94,7 +94,7 @@ extension MainViewController: UISearchBarDelegate {
         searchBar.resignFirstResponder()
         if let text = searchBar.text {
             networkManager.searchPhotos(query: text) { [unowned self] response in
-                self.results = response.results
+                self.results = response
                 self.collectionView?.reloadData()
             }
         }

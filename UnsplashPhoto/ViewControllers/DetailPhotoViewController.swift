@@ -31,6 +31,16 @@ final class DetailPhotoViewController: UIViewController {
         return label
     }()
     
+    private let locationUser: UILabel = {
+        let label = UILabel()
+        return label
+    }()
+    
+    private let numberDownloads: UILabel = {
+        let label = UILabel()
+        return label
+    }()
+    
     private let addInFavoriteButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Add To Favorite", for: .normal)
@@ -49,8 +59,10 @@ final class DetailPhotoViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         
-        userName.text = result.user.name
+        userName.text = result.user?.name
         dataCreate.text = result.created_at
+        locationUser.text = result.user?.location
+        numberDownloads.text = String(result.downloads)
         view.addSubview(photoImageView)
         configureStackView()
         setImage(urlString: result.urls.regular)
@@ -85,6 +97,8 @@ final class DetailPhotoViewController: UIViewController {
         stackView.addArrangedSubview(photoImageView)
         stackView.addArrangedSubview(userName)
         stackView.addArrangedSubview(dataCreate)
+        stackView.addArrangedSubview(locationUser)
+        stackView.addArrangedSubview(numberDownloads)
         stackView.addArrangedSubview(addInFavoriteButton)
         
         setStackViewConstraints()

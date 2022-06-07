@@ -15,7 +15,7 @@
 		BD17A6E1284BCB7400CDCD2B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BD17A6E0284BCB7400CDCD2B /* Assets.xcassets */; };
 		BD17A6F1284BCFAF00CDCD2B /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD17A6F0284BCFAF00CDCD2B /* MainViewController.swift */; };
 		BD17A6F3284BCFC300CDCD2B /* FavoriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD17A6F2284BCFC300CDCD2B /* FavoriteViewController.swift */; };
-		BD17A6F5284BE0E300CDCD2B /* DataResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD17A6F4284BE0E300CDCD2B /* DataResponse.swift */; };
+		BD17A6F5284BE0E300CDCD2B /* ApiResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD17A6F4284BE0E300CDCD2B /* ApiResponse.swift */; };
 		BD17A6F7284BE21E00CDCD2B /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD17A6F6284BE21E00CDCD2B /* NetworkManager.swift */; };
 		BD879AAC284E1E5B00EEC165 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD879AAB284E1E5B00EEC165 /* CustomTableViewCell.swift */; };
 /* End PBXBuildFile section */
@@ -30,7 +30,7 @@
 		BD17A6E5284BCB7400CDCD2B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BD17A6F0284BCFAF00CDCD2B /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		BD17A6F2284BCFC300CDCD2B /* FavoriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewController.swift; sourceTree = "<group>"; };
-		BD17A6F4284BE0E300CDCD2B /* DataResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataResponse.swift; sourceTree = "<group>"; };
+		BD17A6F4284BE0E300CDCD2B /* ApiResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiResponse.swift; sourceTree = "<group>"; };
 		BD17A6F6284BE21E00CDCD2B /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		BD879AAB284E1E5B00EEC165 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 		E5E711E4D1A09D9986A7EC25 /* Pods-UnsplashPhoto.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnsplashPhoto.release.xcconfig"; path = "Target Support Files/Pods-UnsplashPhoto/Pods-UnsplashPhoto.release.xcconfig"; sourceTree = "<group>"; };
@@ -56,7 +56,6 @@
 				F6F26A87C75DA66DD922BB90 /* Pods-UnsplashPhoto.debug.xcconfig */,
 				E5E711E4D1A09D9986A7EC25 /* Pods-UnsplashPhoto.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -139,7 +138,7 @@
 		BD17A6EF284BCCC400CDCD2B /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				BD17A6F4284BE0E300CDCD2B /* DataResponse.swift */,
+				BD17A6F4284BE0E300CDCD2B /* ApiResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -265,7 +264,7 @@
 				BD17A6F3284BCFC300CDCD2B /* FavoriteViewController.swift in Sources */,
 				BD17A6F7284BE21E00CDCD2B /* NetworkManager.swift in Sources */,
 				BD1364FC284CB79600B90E4C /* DetailPhotoViewController.swift in Sources */,
-				BD17A6F5284BE0E300CDCD2B /* DataResponse.swift in Sources */,
+				BD17A6F5284BE0E300CDCD2B /* ApiResponse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
