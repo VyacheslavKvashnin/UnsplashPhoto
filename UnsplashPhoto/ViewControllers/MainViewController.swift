@@ -14,6 +14,16 @@ final class MainViewController: UIViewController {
     private var results: [Results] = []
     private let searchBar = UISearchBar()
     
+    lazy var indicatorView: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .medium)
+        indicator.color = .gray
+        indicator.startAnimating()
+        indicator.hidesWhenStopped = true
+        indicator.transform = CGAffineTransform(scaleX: 2, y: 2)
+        indicator.center = view.center
+        return indicator
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Photos"
@@ -25,6 +35,12 @@ final class MainViewController: UIViewController {
         
         fetchRandomPhoto()
         setLayoutCollectionView()
+        
+        setupViews()
+    }
+    
+    func setupViews() {
+        view.addSubview(indicatorView)
     }
     
     override func viewDidLayoutSubviews() {
@@ -46,6 +62,7 @@ final class MainViewController: UIViewController {
             switch results {
             case .success(let results):
                 self?.results = results
+                self?.indicatorView.stopAnimating()
             case .failure(let error):
                 print(error.localizedDescription)
             }

@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class FavoriteViewController: UIViewController {
+class FavoriteViewController: UIViewController {
     
     var results: [DataPhoto] = []
     let tableView = UITableView()

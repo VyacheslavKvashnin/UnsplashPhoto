@@ -11,10 +11,9 @@ import SDWebImage
 final class DetailPhotoViewController: UIViewController {
     
     private let stackView = UIStackView()
-    
     var result: Results!
-    
     var dataManager = DatabaseManager.shared
+    var favorite = FavoriteViewController()
     
     private let photoImageView: UIImageView = {
         let imageView = UIImageView()
@@ -48,12 +47,19 @@ final class DetailPhotoViewController: UIViewController {
         button.setTitleColor(UIColor.white, for: .normal)
         button.backgroundColor = .systemCyan
         button.layer.cornerRadius = 10
-        button.addTarget(self, action: #selector(saveInFavorite), for: .touchUpInside)
+        button.addTarget(self, action: #selector(saveAndDeleteToFavorite), for: .touchUpInside)
         return button
     }()
     
-    @objc func saveInFavorite() {
-        addToFavorite()
+    @objc func saveAndDeleteToFavorite() {
+        
+        
+            setToFavorite()
+    
+            if let index = dataManager.results.firstIndex(where: { $0.id == result.id }) {
+                dataManager.deleteData(item: dataManager.results.remove(at: index))
+            }
+        
     }
     
     override func viewDidLoad() {
@@ -73,7 +79,7 @@ final class DetailPhotoViewController: UIViewController {
         numberDownloads.text = String(result.downloads)
     }
 
-    private func addToFavorite() {
+    private func setToFavorite() {
         dataManager.saveData(
             photo: result.urls.regular,
             userName: result.user?.name ?? "",

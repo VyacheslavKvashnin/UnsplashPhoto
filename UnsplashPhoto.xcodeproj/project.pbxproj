@@ -93,8 +93,8 @@
 			isa = PBXGroup;
 			children = (
 				BD17A6EC284BCC3100CDCD2B /* ViewControllers */,
-				BD17A6EF284BCCC400CDCD2B /* Models */,
 				BD17A6EE284BCCB800CDCD2B /* Services */,
+				BD17A6EF284BCCC400CDCD2B /* Models */,
 				BD17A6ED284BCC5600CDCD2B /* App */,
 				BD17A6EB284BCBAF00CDCD2B /* Resource */,
 			);
@@ -104,6 +104,7 @@
 		BD17A6EB284BCBAF00CDCD2B /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				BD04FFDB284FBD2800E9B0B7 /* PhotoDatabase.xcdatamodeld */,
 				BD17A6E0284BCB7400CDCD2B /* Assets.xcassets */,
 			);
 			path = Resource;
@@ -115,10 +116,9 @@
 				BD17A6DB284BCB7200CDCD2B /* TabBarController.swift */,
 				BD17A6F0284BCFAF00CDCD2B /* MainViewController.swift */,
 				BD17A6F2284BCFC300CDCD2B /* FavoriteViewController.swift */,
+				BD1364FB284CB79600B90E4C /* DetailPhotoViewController.swift */,
 				BD879AAB284E1E5B00EEC165 /* CustomTableViewCell.swift */,
 				BD1364F9284C611A00B90E4C /* ImageCollectionViewCell.swift */,
-				BD1364FB284CB79600B90E4C /* DetailPhotoViewController.swift */,
-				BD04FFDB284FBD2800E9B0B7 /* PhotoDatabase.xcdatamodeld */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";

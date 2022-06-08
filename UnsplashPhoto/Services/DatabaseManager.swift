@@ -11,13 +11,14 @@ class DatabaseManager {
     static let shared = DatabaseManager()
     
     private init() {}
+    var results: [DataPhoto] = []
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     func fetchDataPhoto(completion: @escaping([DataPhoto]) -> Void) {
         do {
-            let results = try context.fetch(DataPhoto.fetchRequest())
-                completion(results)
+            self.results = try context.fetch(DataPhoto.fetchRequest())
+            completion(self.results)
         } catch {
             print(error.localizedDescription)
         }
