@@ -47,39 +47,79 @@ final class DetailPhotoViewController: UIViewController {
         button.setTitleColor(UIColor.white, for: .normal)
         button.backgroundColor = .systemCyan
         button.layer.cornerRadius = 10
-        button.addTarget(self, action: #selector(saveAndDeleteToFavorite), for: .touchUpInside)
+        button.addTarget(self, action: #selector(pressedSaveAndDelete), for: .touchUpInside)
         return button
     }()
     
-    @objc func saveAndDeleteToFavorite() {
-        
-        
-            setToFavorite()
-    
-            if let index = dataManager.results.firstIndex(where: { $0.id == result.id }) {
-                dataManager.deleteData(item: dataManager.results.remove(at: index))
-            }
-        
+    @objc func pressedSaveAndDelete() {
+        saveOrDeleteToFavorite()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-
-        setup()
+        setupView()
         view.addSubview(photoImageView)
         configureStackView()
         setImage(urlString: result.urls.regular)
     }
     
-    private func setup() {
-        userName.text = result.user?.name
-        dataCreate.text = result.created_at
-        locationUser.text = result.user?.location
-        numberDownloads.text = String(result.downloads)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        checkTitleButton()
     }
-
-    private func setToFavorite() {
+    
+    private func saveOrDeleteToFavorite() {
+        if addInFavoriteButton.titleLabel?.text == "Add To Favorite" {
+            addToFavorite()
+            addInFavoriteButton.setTitle("Remove from favorites", for: .normal)
+        } else if addInFavoriteButton.titleLabel?.text == "Remove from favorites" {
+            addInFavoriteButton.setTitle("Add To Favorite", for: .normal)
+            deleteFromFavorite()
+        }
+    }
+    
+    private func checkTitleButton() {
+        if let index = dataManager.results.firstIndex(where: { $0.id == result.id }) {
+            getIndexResults(index: index)
+        }
+    }
+    
+    private func getIndexResults(index: Int) {
+        if let indexResults = dataManager.results[index].id {
+            setTitleForButton(index: indexResults)
+        }
+    }
+    
+    private func setTitleForButton(index: String) {
+        if index != result.id {
+            addInFavoriteButton.setTitle("Add To Favorite", for: .normal)
+        } else {
+            addInFavoriteButton.setTitle("Remove from favorites", for: .normal)
+        }
+    }
+    
+    private func setupView() {
+        userName.text = "Name: \(result.user?.name ?? "")"
+        dataCreate.text = "Data: \(getDate(date: result.created_at))"
+        locationUser.text = "Location: \(result.user?.location ?? "")"
+        numberDownloads.text = "Downloads: \(String(result.downloads))"
+    }
+    
+    private func getDate(date: String) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd-MM-yyyy"
+        let data = dateFormatter.date(from: date) ?? Date()
+        return dateFormatter.string(from: data)
+    }
+    
+    private func deleteFromFavorite() {
+        if let index = dataManager.results.firstIndex(where: { $0.id == result.id }) {
+            dataManager.deleteData(item: dataManager.results.remove(at: index))
+        }
+    }
+    
+    private func addToFavorite() {
         dataManager.saveData(
             photo: result.urls.regular,
             userName: result.user?.name ?? "",
@@ -115,6 +155,6 @@ final class DetailPhotoViewController: UIViewController {
     
     private func setImage(urlString: String) {
         guard let url = URL(string: urlString) else { return }
-            photoImageView.sd_setImage(with: url)
+        photoImageView.sd_setImage(with: url)
     }
 }

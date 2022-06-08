@@ -46,7 +46,7 @@ final class CustomTableViewCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        imageViewCell.frame = CGRect(x: 16, y: 0, width: 100, height: 100)
+        imageViewCell.frame = CGRect(x: 10, y: 0, width: 100, height: 95)
         labelCell.frame = CGRect(x: 130, y: 0, width: 200, height: 100)
     }
 }

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class FavoriteViewController: UIViewController {
+final class FavoriteViewController: UIViewController {
     
     var results: [DataPhoto] = []
     let tableView = UITableView()
@@ -65,6 +65,7 @@ extension FavoriteViewController: UITableViewDataSource, UITableViewDelegate {
         let userName = results[indexPath.row].userName
         
         cell.configure(urlString: imageURL ?? "", text: userName ?? "")
+        cell.accessoryType = .disclosureIndicator
         return cell
     }
     
