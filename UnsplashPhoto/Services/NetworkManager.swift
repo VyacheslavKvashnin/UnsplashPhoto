@@ -18,9 +18,9 @@ class NetworkManager {
     private init() {}
     
     let token = "EeIzrN0doNb4XPlVf2cb7-ObHtvadTYOXRVEXetBUgw"
-    
+  
     func fetchPhotos(query: String, completion: @escaping(Result<[Results], NetworkError>) -> Void) {
-    
+
         guard let urlRandom = URL(string: "https://api.unsplash.com/photos/random/?count=30&query=\(query)") else {
             completion(.failure(.badURL))
             return

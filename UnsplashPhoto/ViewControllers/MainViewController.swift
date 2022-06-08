@@ -10,7 +10,7 @@ import UIKit
 final class MainViewController: UIViewController {
     
     private let networkManager = NetworkManager.shared
-    private var collectionView: UICollectionView?
+    private var collectionView: UICollectionView!
     private var results: [Results] = []
     private let searchBar = UISearchBar()
     
@@ -28,21 +28,12 @@ final class MainViewController: UIViewController {
         super.viewDidLoad()
         title = "Photos"
         view.backgroundColor = .systemBackground
-                
-        searchBar.placeholder = "Search photo"
-        searchBar.delegate = self
-        view.addSubview(searchBar)
         
         fetchRandomPhoto()
         setLayoutCollectionView()
-        
         setupViews()
     }
-    
-    func setupViews() {
-        view.addSubview(indicatorView)
-    }
-    
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         searchBar.frame = CGRect(
@@ -52,9 +43,16 @@ final class MainViewController: UIViewController {
             height: 50)
         collectionView?.frame = CGRect(
             x: 0,
-            y: view.safeAreaInsets.top + 55,
+            y: view.safeAreaInsets.top + 50,
             width: view.frame.size.width,
             height: view.frame.size.height - 55)
+    }
+    
+    private func setupViews() {
+        view.addSubview(indicatorView)
+        searchBar.placeholder = "Search photo"
+        searchBar.delegate = self
+        view.addSubview(searchBar)
     }
     
     private func fetchRandomPhoto() {
@@ -66,9 +64,11 @@ final class MainViewController: UIViewController {
             case .failure(let error):
                 print(error.localizedDescription)
             }
-            self?.collectionView?.reloadData()
+            self?.collectionView.reloadData()
         }
     }
+    
+    // MARK: - UICollectionViewFlowLayout
     
     private func setLayoutCollectionView() {
         let layout = UICollectionViewFlowLayout()
@@ -80,8 +80,7 @@ final class MainViewController: UIViewController {
             height: view.frame.width / 2)
         let collectionView = UICollectionView(
             frame: .zero,
-            collectionViewLayout: layout
-        )
+            collectionViewLayout: layout)
         collectionView.register(
             ImageCollectionViewCell.self,
             forCellWithReuseIdentifier: ImageCollectionViewCell.identifier
@@ -108,7 +107,7 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         results.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let imageURL = results[indexPath.row].urls.regular
+        let imageURL = results[indexPath.row].urls.small
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.identifier, for: indexPath) as? ImageCollectionViewCell else {
             return UICollectionViewCell()
         }
@@ -130,7 +129,7 @@ extension MainViewController: UISearchBarDelegate {
                 case .failure(let error):
                     print(error.localizedDescription)
                 }
-                self?.collectionView?.reloadData()
+                self?.collectionView.reloadData()
             }
         }
     }

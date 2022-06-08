@@ -9,7 +9,6 @@ import UIKit
 
 class DatabaseManager {
     static let shared = DatabaseManager()
-    
     private init() {}
     var results: [DataPhoto] = []
     
@@ -32,11 +31,11 @@ class DatabaseManager {
         dataPhoto.downloads = Float(downloads)
         dataPhoto.date = date
         dataPhoto.id = id
-
+        
         do {
             try context.save()
-        } catch {
-            
+        } catch let error {
+            print(error.localizedDescription)
         }
     }
     
@@ -44,9 +43,8 @@ class DatabaseManager {
         context.delete(item)
         do {
             try context.save()
-        } catch {
-            
+        } catch let error {
+            print(error.localizedDescription)
         }
     }
-    
 }

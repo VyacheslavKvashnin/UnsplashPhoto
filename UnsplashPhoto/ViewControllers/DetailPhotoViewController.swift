@@ -17,7 +17,8 @@ final class DetailPhotoViewController: UIViewController {
     
     private let photoImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
         return imageView
     }()
     
@@ -71,7 +72,7 @@ final class DetailPhotoViewController: UIViewController {
     
     private func saveOrDeleteToFavorite() {
         if addInFavoriteButton.titleLabel?.text == "Add To Favorite" {
-            addToFavorite()
+            setDataInCoreData()
             addInFavoriteButton.setTitle("Remove from favorites", for: .normal)
         } else if addInFavoriteButton.titleLabel?.text == "Remove from favorites" {
             addInFavoriteButton.setTitle("Add To Favorite", for: .normal)
@@ -119,7 +120,7 @@ final class DetailPhotoViewController: UIViewController {
         }
     }
     
-    private func addToFavorite() {
+    private func setDataInCoreData() {
         dataManager.saveData(
             photo: result.urls.regular,
             userName: result.user?.name ?? "",

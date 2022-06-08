@@ -14,7 +14,8 @@ final class CustomTableViewCell: UITableViewCell {
     
     private let imageViewCell: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
         return imageView
     }()
     
