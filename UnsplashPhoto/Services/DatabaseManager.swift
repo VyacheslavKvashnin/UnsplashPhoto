@@ -5,7 +5,6 @@
 //  Created by Вячеслав Квашнин on 07.06.2022.
 //
 
-import Foundation
 import UIKit
 
 class DatabaseManager {
@@ -13,34 +12,31 @@ class DatabaseManager {
     
     private init() {}
     
-    var results: [DataPhoto] = []
-    
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     func fetchDataPhoto(completion: @escaping([DataPhoto]) -> Void) {
         do {
             let results = try context.fetch(DataPhoto.fetchRequest())
-            completion(results)
+                completion(results)
         } catch {
-            
+            print(error.localizedDescription)
         }
-        
     }
     
-    func saveData(photo: String, userName: String, location: String, date: String, downloads: Int) {
+    func saveData(photo: String, userName: String, location: String, date: String, downloads: Int, id: String) {
         let dataPhoto = DataPhoto(context: context)
         dataPhoto.photo = photo
         dataPhoto.userName = userName
         dataPhoto.location = location
-        dataPhoto.downloads = Int16(downloads)
+        dataPhoto.downloads = Float(downloads)
         dataPhoto.date = date
+        dataPhoto.id = id
 
         do {
             try context.save()
         } catch {
             
         }
-        print(dataPhoto)
     }
     
     func deleteData(item: DataPhoto) {

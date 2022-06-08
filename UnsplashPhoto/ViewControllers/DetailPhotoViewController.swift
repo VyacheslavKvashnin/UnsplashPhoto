@@ -59,7 +59,7 @@ final class DetailPhotoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        
+
         setup()
         view.addSubview(photoImageView)
         configureStackView()
@@ -72,14 +72,15 @@ final class DetailPhotoViewController: UIViewController {
         locationUser.text = result.user?.location
         numberDownloads.text = String(result.downloads)
     }
-    
+
     private func addToFavorite() {
         dataManager.saveData(
             photo: result.urls.regular,
             userName: result.user?.name ?? "",
             location: result.user?.location ?? "",
             date: result.created_at,
-            downloads: Int(result.downloads))
+            downloads: Int(result.downloads),
+            id: result.id)
     }
     
     private func configureStackView() {
