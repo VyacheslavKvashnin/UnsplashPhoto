@@ -10,7 +10,9 @@ import UIKit
 final class MainViewController: UIViewController {
     
     private let networkManager = NetworkManager.shared
-    private var collectionView: UICollectionView!
+    private let collectionView = UICollectionView(
+        frame: .zero,
+        collectionViewLayout: UICollectionViewFlowLayout())
     private var results: [Results] = []
     private let searchBar = UISearchBar()
     
@@ -29,11 +31,15 @@ final class MainViewController: UIViewController {
         title = "Photos"
         view.backgroundColor = .systemBackground
         
-        fetchRandomPhoto()
-        setLayoutCollectionView()
         setupViews()
+        fetchRandomPhoto()
     }
-
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        view.addSubview(indicatorView)
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         searchBar.frame = CGRect(
@@ -41,7 +47,7 @@ final class MainViewController: UIViewController {
             y: view.safeAreaInsets.top,
             width: view.frame.size.width - 20,
             height: 50)
-        collectionView?.frame = CGRect(
+        collectionView.frame = CGRect(
             x: 0,
             y: view.safeAreaInsets.top + 50,
             width: view.frame.size.width,
@@ -49,9 +55,16 @@ final class MainViewController: UIViewController {
     }
     
     private func setupViews() {
-        view.addSubview(indicatorView)
         searchBar.placeholder = "Search photo"
         searchBar.delegate = self
+        
+        collectionView.register(
+            ImageCollectionViewCell.self,
+            forCellWithReuseIdentifier: ImageCollectionViewCell.identifier
+        )
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        view.addSubview(collectionView)
         view.addSubview(searchBar)
     }
     
@@ -66,53 +79,6 @@ final class MainViewController: UIViewController {
             }
             self?.collectionView.reloadData()
         }
-    }
-    
-    // MARK: - UICollectionViewFlowLayout
-    
-    private func setLayoutCollectionView() {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        layout.minimumLineSpacing = 0
-        layout.minimumInteritemSpacing = 0
-        layout.itemSize = CGSize(
-            width: view.frame.width / 2,
-            height: view.frame.width / 2)
-        let collectionView = UICollectionView(
-            frame: .zero,
-            collectionViewLayout: layout)
-        collectionView.register(
-            ImageCollectionViewCell.self,
-            forCellWithReuseIdentifier: ImageCollectionViewCell.identifier
-        )
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        view.addSubview(collectionView)
-        self.collectionView = collectionView
-    }
-}
-
-// MARK: - UICollectionViewDataSource
-
-extension MainViewController: UICollectionViewDataSource, UICollectionViewDelegate {
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let result = results[indexPath.item]
-        let detailVC = DetailPhotoViewController()
-        detailVC.result = result
-        navigationController?.pushViewController(detailVC, animated: true)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        results.count
-    }
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let imageURL = results[indexPath.row].urls.small
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.identifier, for: indexPath) as? ImageCollectionViewCell else {
-            return UICollectionViewCell()
-        }
-        cell.configure(with: imageURL)
-        return cell
     }
 }
 
@@ -132,5 +98,49 @@ extension MainViewController: UISearchBarDelegate {
                 self?.collectionView.reloadData()
             }
         }
+    }
+}
+
+// MARK: - UICollectionViewDataSource, UICollectionViewDelegate
+
+extension MainViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let result = results[indexPath.item]
+        let detailVC = DetailPhotoViewController()
+        detailVC.result = result
+        navigationController?.pushViewController(detailVC, animated: true)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        results.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let imageURL = results[indexPath.row].urls.regular
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.identifier, for: indexPath) as? ImageCollectionViewCell else {
+            return UICollectionViewCell()
+        }
+        cell.configure(with: imageURL)
+        return cell
+    }
+}
+
+// MARK: - UICollectionViewFlowLayout
+
+extension MainViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(
+            width: (view.frame.width / 2) - 2,
+            height: (view.frame.width / 2) - 2
+        )
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 4
     }
 }
